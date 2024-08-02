@@ -1,0 +1,64 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["react", "@typescript-eslint", "prettier", "jest"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:jest/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "no-console": 1,
+    "quotes": ["warn", "single"],
+    "jsx-quotes": ["warn", "prefer-double"],
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error",
+    "react/react-in-jsx-scope": 0,
+    "react/no-unescaped-entities": 0,
+    "eol-last": "warn",
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "react-i18next",
+            "importNames": ["useTranslation"],
+            "message": "Please use custom useTranslation hook instead."
+          }
+        ]
+      }
+    ],
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "comma-dangle": "off",
+    "prefer-const": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {"vars": "all", "args": "after-used", "ignoreRestSiblings": false}
+    ]
+  },
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    }
+  },
+  "env": {
+    "jest/globals": true,
+    "node": true
+  },
+  "overrides": [
+    {
+      "files": ["babel.config.js"],
+      "env": {
+        "node": true
+      }
+    }
+  ]
+}
