@@ -1,15 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ActivityIndicator,
-  SafeAreaView,
-  ScrollView
-} from 'react-native';
+import {View, Text, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
 import {useLocalSearchParams} from 'expo-router';
 import {colors} from '@/config/theme/colors';
 import {API_BASE, client} from '@/config/API';
+import Loading from '@/components/Loading';
 
 interface User {
   id: number;
@@ -35,7 +29,7 @@ interface User {
   };
 }
 
-const ItemDetails = () => {
+const UserDetails = () => {
   const {id} = useLocalSearchParams();
 
   const [user, setUser] = useState<User | null>(null);
@@ -58,11 +52,7 @@ const ItemDetails = () => {
   }, [id]);
 
   if (loading) {
-    return (
-      <View style={styles.loader}>
-        <ActivityIndicator size="large" color={colors.accent} />
-      </View>
-    );
+    return <Loading />;
   }
 
   if (!user) {
@@ -173,4 +163,4 @@ const styles = StyleSheet.create({
     marginTop: 20
   }
 });
-export default ItemDetails;
+export default UserDetails;

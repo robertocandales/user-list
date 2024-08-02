@@ -10,13 +10,13 @@ export default function ItemLayout() {
       }}
     >
       <Stack.Screen
-        name="itemList"
+        name="userList"
         options={{
           title: 'User List'
         }}
       />
       <Stack.Screen
-        name="itemDetails"
+        name="userDetails"
         options={{
           title: 'User Details'
         }}

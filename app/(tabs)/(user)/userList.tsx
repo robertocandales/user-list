@@ -1,15 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  ActivityIndicator,
-  TouchableOpacity
-} from 'react-native';
+import {View, Text, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import {colors} from '@/config/theme/colors';
 import {router} from 'expo-router';
 import {API_BASE, client} from '@/config/API';
+import Loading from '@/components/Loading';
 
 interface User {
   id: number;
@@ -38,11 +32,7 @@ const UsersListScreen: React.FC = () => {
   }, []);
 
   if (loading) {
-    return (
-      <View style={styles.loader}>
-        <ActivityIndicator size="large" color={colors.accent} />
-      </View>
-    );
+    return <Loading />;
   }
 
   return (
@@ -57,7 +47,7 @@ const UsersListScreen: React.FC = () => {
         renderItem={({item}) => (
           <TouchableOpacity
             onPress={() =>
-              router.push({pathname: '/itemDetails', params: {id: item.id}})
+              router.push({pathname: '/userDetails', params: {id: item.id}})
             }
             style={styles.userCard}
           >
