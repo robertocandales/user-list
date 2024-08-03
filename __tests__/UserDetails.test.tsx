@@ -2,6 +2,7 @@ import React from 'react';
 import {render, screen, waitFor} from '@testing-library/react-native';
 import {client} from '@/config/API';
 import {useLocalSearchParams} from 'expo-router';
+import {ThemeProvider} from '@/state/ThemeContext';
 import UserDetails from '@/app/(tabs)/(user)/userDetails';
 
 // Mock the API client
@@ -40,7 +41,7 @@ const mockUser = {
   }
 };
 
-describe('ItemDetails', () => {
+describe('UserDetails', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -49,7 +50,11 @@ describe('ItemDetails', () => {
     (client.get as jest.Mock).mockImplementation(() => new Promise(() => {}));
     (useLocalSearchParams as jest.Mock).mockReturnValue({id: 1});
 
-    render(<UserDetails />);
+    render(
+      <ThemeProvider>
+        <UserDetails />
+      </ThemeProvider>
+    );
 
     expect(screen.getByTestId('loading-indicator')).toBeTruthy();
   });
@@ -58,7 +63,11 @@ describe('ItemDetails', () => {
     (client.get as jest.Mock).mockResolvedValue({data: mockUser});
     (useLocalSearchParams as jest.Mock).mockReturnValue({id: 1});
 
-    render(<UserDetails />);
+    render(
+      <ThemeProvider>
+        <UserDetails />
+      </ThemeProvider>
+    );
 
     await waitFor(() => {
       expect(screen.getByText(mockUser.name)).toBeTruthy();
@@ -88,7 +97,11 @@ describe('ItemDetails', () => {
     (client.get as jest.Mock).mockRejectedValue(new Error('Network error'));
     (useLocalSearchParams as jest.Mock).mockReturnValue({id: 1});
 
-    render(<UserDetails />);
+    render(
+      <ThemeProvider>
+        <UserDetails />
+      </ThemeProvider>
+    );
 
     await waitFor(() => {
       expect(screen.getByText('User not found')).toBeTruthy();

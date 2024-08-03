@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
-import {colors} from '@/config/theme/colors';
+import {useTheme} from '@/state/ThemeContext';
+import {colorsPalette} from '@/config/theme/colors';
 import {router} from 'expo-router';
 import {API_BASE, client} from '@/config/API';
 import Loading from '@/components/Loading';
@@ -12,6 +13,9 @@ interface User {
 }
 
 const UsersListScreen: React.FC = () => {
+  const {theme} = useTheme();
+  const currentColors = colorsPalette[theme];
+
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -36,8 +40,12 @@ const UsersListScreen: React.FC = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.screenDescription}>
+    <View
+      style={[styles.container, {backgroundColor: currentColors.background}]}
+    >
+      <Text
+        style={[styles.screenDescription, {color: currentColors.textSecondary}]}
+      >
         Below is a list of users fetched from an external API.
       </Text>
       <FlatList
@@ -49,10 +57,19 @@ const UsersListScreen: React.FC = () => {
             onPress={() =>
               router.push({pathname: '/userDetails', params: {id: item.id}})
             }
-            style={styles.userCard}
+            style={[
+              styles.userCard,
+              {backgroundColor: currentColors.cardBackground}
+            ]}
           >
-            <Text style={styles.userName}>{item.name}</Text>
-            <Text style={styles.userEmail}>{item.email}</Text>
+            <Text style={[styles.userName, {color: currentColors.textPrimary}]}>
+              {item.name}
+            </Text>
+            <Text
+              style={[styles.userEmail, {color: currentColors.textSecondary}]}
+            >
+              {item.email}
+            </Text>
           </TouchableOpacity>
         )}
       />
@@ -63,7 +80,6 @@ const UsersListScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
     paddingHorizontal: 10,
     paddingTop: 20
   },
@@ -75,18 +91,15 @@ const styles = StyleSheet.create({
   screenTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: colors.textPrimary,
     marginBottom: 10,
     textAlign: 'center'
   },
   screenDescription: {
     fontSize: 16,
-    color: colors.textSecondary,
     textAlign: 'center',
     marginBottom: 20
   },
   userCard: {
-    backgroundColor: colors.cardBackground,
     padding: 20,
     marginVertical: 10,
     borderRadius: 10,
@@ -98,12 +111,10 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: colors.textPrimary
+    fontWeight: 'bold'
   },
   userEmail: {
-    fontSize: 14,
-    color: colors.textSecondary
+    fontSize: 14
   }
 });
 

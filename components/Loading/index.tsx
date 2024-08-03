@@ -1,11 +1,18 @@
-import {View, ActivityIndicator, StyleSheet} from 'react-native';
 import React from 'react';
-import {colors} from '@/config/theme/colors';
+import {View, ActivityIndicator, StyleSheet} from 'react-native';
+import {useTheme} from '@/state/ThemeContext';
+import {colorsPalette} from '@/config/theme/colors';
 
 const Loading = () => {
+  const {theme} = useTheme();
+  const currentColors = colorsPalette[theme];
+
   return (
-    <View testID="loading-indicator" style={styles.loader}>
-      <ActivityIndicator size="large" color={colors.accent} />
+    <View
+      testID="loading-indicator"
+      style={[styles.loader, {backgroundColor: currentColors.background}]}
+    >
+      <ActivityIndicator size="large" color={currentColors.tint} />
     </View>
   );
 };

@@ -1,24 +1,46 @@
-import {Tabs} from 'expo-router';
 import React from 'react';
-
+import {TouchableOpacity, StyleSheet} from 'react-native';
+import {Tabs} from 'expo-router';
 import {TabBarIcon} from '@/components/navigation/TabBarIcon';
-import {Colors} from '@/constants/Colors';
-import {useColorScheme} from '@/hooks/useColorScheme';
+import {colorsPalette} from '@/config/theme/colors';
+import {useTheme} from '@/state/ThemeContext';
+import {Ionicons} from '@expo/vector-icons';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const {theme, toggleTheme} = useTheme();
+  const currentColors = colorsPalette[theme];
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false
+        tabBarActiveTintColor: currentColors.tint,
+        headerShown: true,
+        tabBarStyle: {
+          backgroundColor: currentColors.background
+        },
+        tabBarInactiveTintColor: currentColors.textSecondary,
+        headerStyle: {
+          backgroundColor: currentColors.background
+        },
+        headerTintColor: currentColors.textPrimary,
+        headerRight: () => (
+          <TouchableOpacity
+            onPress={toggleTheme}
+            style={styles.themeToggleButton}
+          >
+            <Ionicons
+              name={theme === 'light' ? 'moon' : 'sunny'}
+              size={24}
+              color={currentColors.textPrimary}
+            />
+          </TouchableOpacity>
+        )
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Main Page',
+          title: 'Home',
           tabBarIcon: ({color, focused}) => (
             <TabBarIcon
               name={focused ? 'home' : 'home-outline'}
@@ -30,6 +52,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="(user)"
         options={{
+          headerShown: false,
           title: 'User List',
           tabBarIcon: ({color, focused}) => (
             <TabBarIcon
@@ -42,3 +65,10 @@ export default function TabLayout() {
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  themeToggleButton: {
+    padding: 10,
+    marginRight: 15
+  }
+});

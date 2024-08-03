@@ -1,6 +1,7 @@
 import React from 'react';
 import {render, screen, waitFor} from '@testing-library/react-native';
 import {client} from '@/config/API';
+import {ThemeProvider} from '@/state/ThemeContext';
 import UsersListScreen from '@/app/(tabs)/(user)/userList';
 
 jest.mock('@/config/API', () => ({
@@ -29,9 +30,13 @@ describe('UsersListScreen', () => {
   });
 
   test('displays a loading indicator while data is being fetched', async () => {
-    (client.get as jest.Mock).mockImplementation(() => new Promise(() => {})); // Mocking a pending promise
+    (client.get as jest.Mock).mockImplementation(() => new Promise(() => {}));
 
-    render(<UsersListScreen />);
+    render(
+      <ThemeProvider>
+        <UsersListScreen />
+      </ThemeProvider>
+    );
 
     expect(screen.getByTestId('loading-indicator')).toBeTruthy();
   });
@@ -39,7 +44,11 @@ describe('UsersListScreen', () => {
   test('renders a list of users when data is fetched successfully', async () => {
     (client.get as jest.Mock).mockResolvedValue({data: mockUsers});
 
-    render(<UsersListScreen />);
+    render(
+      <ThemeProvider>
+        <UsersListScreen />
+      </ThemeProvider>
+    );
 
     await waitFor(() => {
       expect(
@@ -55,7 +64,11 @@ describe('UsersListScreen', () => {
   test('handles errors gracefully', async () => {
     (client.get as jest.Mock).mockRejectedValue(new Error('Network error'));
 
-    render(<UsersListScreen />);
+    render(
+      <ThemeProvider>
+        <UsersListScreen />
+      </ThemeProvider>
+    );
 
     await waitFor(() => {
       expect(

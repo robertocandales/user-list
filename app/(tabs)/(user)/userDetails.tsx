@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
 import {useLocalSearchParams} from 'expo-router';
-import {colors} from '@/config/theme/colors';
+import {useTheme} from '@/state/ThemeContext';
+import {colorsPalette} from '@/config/theme/colors';
 import {API_BASE, client} from '@/config/API';
 import Loading from '@/components/Loading';
 
@@ -31,6 +32,8 @@ interface User {
 
 const UserDetails = () => {
   const {id} = useLocalSearchParams();
+  const {theme} = useTheme();
+  const currentColors = colorsPalette[theme];
 
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
@@ -57,42 +60,102 @@ const UserDetails = () => {
 
   if (!user) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.errorText}>User not found</Text>
+      <View
+        style={[styles.container, {backgroundColor: currentColors.background}]}
+      >
+        <Text style={[styles.errorText, {color: 'red'}]}>User not found</Text>
       </View>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[styles.container, {backgroundColor: currentColors.background}]}
+    >
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.title}>{user.name}</Text>
-        <Text style={styles.subtitle}>@{user.username}</Text>
-        <Text style={styles.email}>{user.email}</Text>
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Address</Text>
+        <Text style={[styles.title, {color: currentColors.textPrimary}]}>
+          {user.name}
+        </Text>
+        <Text style={[styles.subtitle, {color: currentColors.textSecondary}]}>
+          @{user.username}
+        </Text>
+        <Text style={[styles.email, {color: currentColors.textPrimary}]}>
+          {user.email}
+        </Text>
+        <View
+          style={[
+            styles.section,
+            {backgroundColor: currentColors.cardBackground}
+          ]}
+        >
           <Text
-            style={styles.detail}
+            style={[styles.sectionTitle, {color: currentColors.textPrimary}]}
+          >
+            Address
+          </Text>
+          <Text
+            style={[styles.detail, {color: currentColors.textSecondary}]}
           >{`${user.address.street}, ${user.address.suite}`}</Text>
           <Text
-            style={styles.detail}
+            style={[styles.detail, {color: currentColors.textSecondary}]}
           >{`${user.address.city}, ${user.address.zipcode}`}</Text>
-          <Text style={styles.detail}>Lat: {user.address.geo.lat}</Text>
-          <Text style={styles.detail}>Lng: {user.address.geo.lng}</Text>
+          <Text style={[styles.detail, {color: currentColors.textSecondary}]}>
+            Lat: {user.address.geo.lat}
+          </Text>
+          <Text style={[styles.detail, {color: currentColors.textSecondary}]}>
+            Lng: {user.address.geo.lng}
+          </Text>
         </View>
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Phone</Text>
-          <Text style={styles.detail}>{user.phone}</Text>
+        <View
+          style={[
+            styles.section,
+            {backgroundColor: currentColors.cardBackground}
+          ]}
+        >
+          <Text
+            style={[styles.sectionTitle, {color: currentColors.textPrimary}]}
+          >
+            Phone
+          </Text>
+          <Text style={[styles.detail, {color: currentColors.textSecondary}]}>
+            {user.phone}
+          </Text>
         </View>
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Website</Text>
-          <Text style={styles.detail}>{user.website}</Text>
+        <View
+          style={[
+            styles.section,
+            {backgroundColor: currentColors.cardBackground}
+          ]}
+        >
+          <Text
+            style={[styles.sectionTitle, {color: currentColors.textPrimary}]}
+          >
+            Website
+          </Text>
+          <Text style={[styles.detail, {color: currentColors.textSecondary}]}>
+            {user.website}
+          </Text>
         </View>
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Company</Text>
-          <Text style={styles.detail}>{user.company.name}</Text>
-          <Text style={styles.detail}>{user.company.catchPhrase}</Text>
-          <Text style={styles.detail}>{user.company.bs}</Text>
+        <View
+          style={[
+            styles.section,
+            {backgroundColor: currentColors.cardBackground}
+          ]}
+        >
+          <Text
+            style={[styles.sectionTitle, {color: currentColors.textPrimary}]}
+          >
+            Company
+          </Text>
+          <Text style={[styles.detail, {color: currentColors.textSecondary}]}>
+            {user.company.name}
+          </Text>
+          <Text style={[styles.detail, {color: currentColors.textSecondary}]}>
+            {user.company.catchPhrase}
+          </Text>
+          <Text style={[styles.detail, {color: currentColors.textSecondary}]}>
+            {user.company.bs}
+          </Text>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -102,7 +165,6 @@ const UserDetails = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
     paddingTop: 20,
     paddingHorizontal: 10
   },
@@ -118,26 +180,22 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: colors.textPrimary,
     marginBottom: 10,
     textAlign: 'center'
   },
   subtitle: {
     fontSize: 18,
-    color: colors.textSecondary,
     textAlign: 'center',
     marginBottom: 5
   },
   email: {
     fontSize: 16,
-    color: colors.textPrimary,
     textAlign: 'center',
     marginBottom: 20
   },
   section: {
     marginBottom: 20,
     padding: 15,
-    backgroundColor: colors.cardBackground,
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
@@ -148,17 +206,14 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: colors.textPrimary,
     marginBottom: 10
   },
   detail: {
     fontSize: 16,
-    color: colors.textSecondary,
     marginBottom: 5
   },
   errorText: {
     fontSize: 18,
-    color: 'red',
     textAlign: 'center',
     marginTop: 20
   }
