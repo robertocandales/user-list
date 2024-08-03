@@ -48,9 +48,17 @@ The questions are in the following path `/QUESTIONS.md`
 
 ## Some images of the project
 
+## Dark Mode
+
 Home              |  User List         | User Details 
 :-------------------------:|:--------------------------:|:--------------------------:
 <img src="https://github.com/user-attachments/assets/1a9f96f2-070e-4d75-a4ea-614a343c4e90" width="200" height="400" />  | <img src="https://github.com/user-attachments/assets/91b75de0-09ca-4f0d-8c82-75644c3cf9eb" width="200" height="400" /> | <img src="https://github.com/user-attachments/assets/d973f51b-b8bd-4c5c-84c4-0fe8d2935cd1" width="200" height="400" />
+
+## Light Mode
+
+Home              |  User List         | User Details 
+:-------------------------:|:--------------------------:|:--------------------------:
+<img src="https://github.com/user-attachments/assets/1666db05-8215-4c66-8a06-2e75c68cee7f" width="200" height="400" /> | <img src="https://github.com/user-attachments/assets/5dc7f5a6-5abf-4f4d-b8ff-ec0ac254784e" width="200" height="400" /> | <img src="https://github.com/user-attachments/assets/6634e33e-42cf-4b41-ac4c-96ec7f5b1275" width="200" height="400" />
 
 
   
