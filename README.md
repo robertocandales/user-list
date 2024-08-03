@@ -45,3 +45,13 @@ Join our community of developers creating universal apps.
 ## Questions
 
 The questions are in the following path `/QUESTIONS.md`
+
+## Some images of the project
+
+Home              |  User List         | User Details 
+:-------------------------:|:--------------------------:|:--------------------------:
+<img src="https://github.com/user-attachments/assets/d973f51b-b8bd-4c5c-84c4-0fe8d2935cd1" width="200" height="400" /> | <img src="https://github.com/user-attachments/assets/91b75de0-09ca-4f0d-8c82-75644c3cf9eb" width="200" height="400" /> | <img src="https://github.com/user-attachments/assets/1a9f96f2-070e-4d75-a4ea-614a343c4e90" width="200" height="400" />
+
+
+  
+
